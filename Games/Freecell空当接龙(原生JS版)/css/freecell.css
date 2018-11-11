@@ -1,0 +1,84 @@
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-decoration: none;
+}
+
+html, body {
+	position: relative;
+	height: 100%;
+}
+
+#freecell {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: url("../img/background.jpg");
+	background-size: cover;
+	border: 2px solid black;
+}
+
+#game_head {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	margin-left: -600px;
+	width: 1200px;
+	height: 150px;
+	border: 2px solid yellow;
+}
+
+#game_area {
+	position: relative;
+	width: 80%;
+	height: 70%;
+	/*min-width: 800px;*/
+	margin: 160px auto;
+	border: 2px solid yellow;
+}
+
+.card {
+	position: absolute;
+	width: 80px;
+	height: 120px;
+	background: url("../img/cover_red.png");
+	background-size: cover;
+	border: 1px solid white;
+}
+
+.card_site {
+	position: absolute;
+	width: 80px;
+	height: 120px;
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+.card_line {
+	/*position: absolute;*/
+	width: 12.5%;
+	height: 100%;
+	/*display: inline-block;*/
+	float: left;
+	/*border: 2px solid red;*/
+}
+
+#start_btn {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -120px;
+	margin-top: -40px;
+	width: 240px;
+	height: 80px;
+	color: white;
+	text-align: center;
+	line-height: 80px;
+	font-size: 36px;
+	font-weight: 400;
+	background: olive;
+	border: 1px solid black;
+	border-radius: 10px;
+	cursor: pointer;
+}

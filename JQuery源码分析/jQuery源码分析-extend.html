@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery源码分析之extend方法-Alexander00Win99-20180818</title>
+</head>
+<body>
+	<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+	<script>
+		jQuery.extend = jQuery.fn.extend = function() {
+			// 默认传入一个形参(即使没有任何形参，target置为新建的{}，i=1
+			// $.extend() => target={} && i=1 && length=0 && deep=false
+			// $.extend(999) => target=999 && i=1 && length=1 && deep=false
+			// $.extend("alex") => target="alex" && i=1 && length=1 && deep=false
+			// $.extend(dest, src1, src2, src3...) => target=dest && i=1 && length=x && deep=false
+			var src, copyIsArray, copy, name, options, clone,
+				target = arguments[0] || {},
+				i = 1,
+				length = arguments.length,
+				deep = false;
+
+			// Handle a deep copy situation
+			// 使用target=argument[0]是否Boolean类型区分深拷贝和浅拷贝(argument[1])，同时target右移到第二个参数：
+			// 第一位参数不是boolean类型=>deep=false，第一位参数继续作为target；第一位参数是boolean类型=>deep=bool，第二位参数作为target(如果开始没传的话新建{})
+			// $.extend(bool) => target={} && i=2
+			// $.extend(bool, dest, src1, src2, src3...) => target=dest && i=2
+			if ( typeof target === "boolean" ) {
+				deep = target;
+				// skip the boolean and the target
+				target = arguments[ i ] || {};   
+				i++;
+			}
+
+			// Handle case when target is a string or something else possible in deep copy
+			// 比如：$.extend(bool) | $.extend(999) | $.extend("alex")
+			if ( typeof target !== "object" && !jQuery.isFunction(target) ) {
+				target = {};
+			}
+
+			// extend jQuery itself if only one argument is passed
+			// 如果除去boolean类型参数之外，只剩一个参数，target对象为jQuery对象自身this，因此需要进行i--操作以使arugment[i]存在
+			// $.extend() target={}, deep=false, i=1, length=0(for循环不会执行，直接返回target={})
+			// $.extend(999) => target=999->{}->jQuery(this), deep=false, i=1->0, length=1
+			// $.extend("alex") => target="alex"->{}->jQuery(this), deep=false, i=1->0, length=1
+			// $.extend({name: "alex", age: 999}) target={...}->jQuery(this), deep=false, i=1->0, length=1
+			// $.extend(bool) deep=bool, target={}->{}, i=2, length=1(for循环不会执行，直接返回target={})
+			// $.extend(bool, 999) deep=bool, target=999->{}->jQuery(this), i=2->1, length=2
+			// $.extend(bool, "alex") deep=bool, target="alex"->{}->jQuery(this), i=2->1, length=2
+			// $.extend(bool, {name: "alex", age: 999}) deep=bool, target={name: "alex", age: 999}->jQuery(this), i=2->1, length=2
+			// $.extend(bool, {name: "alex", age: 999}, {name: "alexander wen", age: 99, sex: "male"}, {name: "alexander00win99", age: 81, kpi: "outstanding"}) deep=bool, target={...}, i=2, length=4
+			if ( i === length ) {
+				target = this;
+				i--;
+			}
+
+			// 对从i开始的多个参数进行遍历
+			for ( ; i < length; i++ ) {
+				// Only deal with non-null/undefined values
+				// 只处理非null值，$.extend(bool, {name: "alex", age: 999}, null...)形参中的null会被过滤
+				if ( (options = arguments[ i ]) != null ) {
+					// Extend the base object
+					// 展开扩展对象
+					// $.extend(bool, 999) options=999 target=jQuery
+					// $.extend(bool, "alex") options=alex target=jQuery
+					// $.extend(bool, {name: "alex", age: 999}) options={...} target={...}
+					for ( name in options ) {
+						src = target[ name ];
+						copy = options[ name ];
+						// Use continue to prevent/jump out endless loop by bypassing iteration once [target](fixed) === copy(varied every time as arguments[i][prop])
+						// 防止循环引用(某个arguments[i]的某个属性值和target指向同一对象)
+						if ( target === copy ) {
+							continue;
+						}
+						// Recurse if we're merging plain objects or arrays
+						// 使用递归方式进行深拷贝
+						if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
+							if ( copyIsArray ) {
+								copyIsArray = false;
+								clone = src && jQuery.isArray(src) ? src : [];
+
+							} else {
+								clone = src && jQuery.isPlainObject(src) ? src : {};
+							}
+							// Never move original objects, clone them
+							target[ name ] = jQuery.extend( deep, clone, copy );
+						// Don't bring in undefined values
+						// 对于copy是值类型而非引用类型(undefined未定义值不做处理)，直接添加属性方式进行浅拷贝
+						} else if ( copy !== undefined ) {
+							target[ name ] = copy;
+						}
+					}
+				}
+			}
+			// Return the modified object
+			return target;
+		};
+ 	</script>
+</body>
+</html>

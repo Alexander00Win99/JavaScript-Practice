@@ -1,0 +1,16 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#game2048 {
+	position: relative;
+	margin: 30px auto;
+	/*background: chocolate;*/
+}
+
+#game2048 div {
+	position: absolute;
+	display: inline-block;
+	border: 1px dashed black;
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Graph-dfs+bfs_Alexander00Win99_20180812</title>
+</head>
+<body>
+	<script>
+		// nodesOpt参数支持数字(节点数：自动生成从零开始的连续节点数组)或者数组(节点数组：数组内部节点编号不一定连续，但是肯定不会重复)
+		function Graph(nodeOpt) {
+			// G=(V, E)
+			this.vNum = typeof(nodeOpt) == "number" ? nodeOpt : nodeOpt.length;
+			this.eNum = 0;
+
+			// 点集：一维数组，存储节点编号，不一定0,1,2,3...连续排列，但是肯定不会存在重复元素，长度为节点数。
+			this.nodeSet = [];
+			// 边集：二维数组，存储相邻节点(本例采用邻接链表而非邻接矩阵表示邻接关系)，长度为节点数。
+			this.adjSet = [];
+			// 标识某个节点是否已遍历。
+			this.nodeVisited = [];
+
+			// 一次生成一条边
+			this.genEdge = genEdge;
+			// 打印各个节点的相邻节点
+			this.showAdj = showAdj;
+
+			// 深度优先搜索，resDfs数组存储搜索结果，长度为vNum。
+			this.dfs = dfs;
+			// 保存单次搜索结果，一维数组。
+			this.dfsRes = [];
+			// 起始节点不同，得到不同结果，因此需要针对每个节点保存不同遍历结果。
+			this.genDfsSet = genDfsSet;
+			// 保存每个节点搜索结果，二维数组。
+			this.dfsSet = [];
+
+			// 广度优先搜索，resBfs数组存储搜索结果，长度为vNum。
+			this.bfs = bfs;
+			// 保存单次搜索结果，一维数组。
+			this.bfsRes = [];
+			// 起始节点不同，得到不同结果，因此需要针对每个节点保存不同遍历结果。
+			this.genBfsSet = genBfsSet;
+			// 保存每个节点搜索结果，二维数组。
+			this.bfsSet = [];
+
+			// 初始化图：每个节点编号为空，相邻节点为空，未被遍历。
+			this.init = function () {
+				for (var i = 0; i < this.vNum; i ++) {
+					this.nodeSet[i] = typeof(nodeOpt) == "number" ? i : nodeOpt[i];
+					this.adjSet[i] = [];
+					this.nodeVisited[i] = false;
+					this.dfsSet[i] = [];
+					this.bfsSet[i] = [];
+				}
+			}
+			this.init();
+
+			this.clearVisited = function () {
+				for (var i = 0; i < this.vNum; i ++) {
+					this.nodeVisited[i] = false;
+				}
+			}
+
+			this.clearDfsRes = function () {
+				this.dfsRes = [];
+			}
+
+			this.clearBfsRes = function () {
+				this.bfsRes = [];
+			}
+		}
+
+		function genEdge(a, b) {
+			var indexA = this.nodeSet.indexOf(a);
+			var indexB = this.nodeSet.indexOf(b);
+			if (indexA == -1 || indexB == -1 || a == b) {
+				// throw(new Error("Invalid parameter, graph does not contain edge like this. Please check and input again!"));
+				alert("Invalid parameter, graph does not contain edge like this. Please check and input again!");
+				return;
+			}
+			this.adjSet[indexA].push(b);
+			this.adjSet[indexB].push(a);
+			this.eNum ++;
+		}
+
+		function showAdj() {
+			for (var i = 0; i < this.vNum; i ++) {
+				console.log(`${this.nodeSet[i]}(${i}th node) has adjcent nodes: `, this.adjSet[i]);
+			}
+		}
+
+		// 生成指定编号图
+		// var graph = new Graph([0, 2, 4, 6, 8, 10, 12]);
+		// graph.genEdge(0, 2);
+		// graph.genEdge(0, 4);
+		// graph.genEdge(2, 6);
+		// graph.genEdge(2, 8);
+		// graph.genEdge(4, 10);
+		// graph.genEdge(4, 12);
+
+		// 生成连续编号图
+		var graph = new Graph(13);
+		graph.genEdge(0, 1);
+		graph.genEdge(0, 2);
+		graph.genEdge(0, 3);
+		graph.genEdge(1, 4);
+		graph.genEdge(1, 5);
+		graph.genEdge(1, 6);
+		graph.genEdge(2, 7);
+		graph.genEdge(2, 8);
+		graph.genEdge(2, 9);
+		graph.genEdge(3, 10);
+		graph.genEdge(3, 11);
+		graph.genEdge(3, 12);
+		graph.showAdj();
+
+		// 参数node是节点编号
+		function dfs(node) {
+			// 清除前面遍历标志，dfs因为使用递归算法，所以不能函数内部clearVisited，否则会导致栈溢出严重错误。
+			// this.clearVisited();
+
+			var idx = this.nodeSet.indexOf(node);
+			if (idx == -1) {
+				// throw(new Error("Invalid search, graph does not contain node like this. Please check and input again!"));
+				alert("Invalid search, graph does not contain node like this. Please check and input again!");
+				return;
+			}
+			// 如果第idx个节点之前未被遍历，打印并且压入结果数组，同时标识已经遍历(后续遍历不再打印以及压入数组)
+			if (!this.nodeVisited[idx]) {
+				this.dfsRes.push(node);
+				this.nodeVisited[idx] = true;
+			}
+
+			var len = this.adjSet[idx].length;
+			// 依次遍历第i个元素的所有邻接节点，其中尚未被遍历的会被遍历输出。
+			for (var i = 0; i < len; i ++) {
+				var adjNode = this.adjSet[idx][i];
+				var index = this.nodeSet.indexOf(adjNode);
+				if (!this.nodeVisited[index]) {
+					this.dfs(adjNode);
+				}
+			}
+		}
+
+		// 参数node是节点编号
+		function bfs(node) {
+			// 清除遍历标志
+			this.clearVisited();
+
+			var queue = [];
+			queue.push(node);
+			while (queue.length > 0) {
+				// 移出队列首元素
+				var shiftedNode = queue.shift();
+				this.bfsRes.push(shiftedNode);
+				var idx = this.nodeSet.indexOf(shiftedNode);
+				this.nodeVisited[idx] = true;
+				// 依次压入队列首元素的邻接节点中尚未遍历者
+				for (var i = 0; i < this.adjSet[idx].length; i ++) {
+					var index = this.nodeSet.indexOf(this.adjSet[idx][i]);
+					if (!this.nodeVisited[index]) {
+						queue.push(this.adjSet[idx][i]);
+					}
+				}
+			}
+		}
+
+		function genDfsSet() {
+			console.log("i am here")
+			for (var i = 0; i < this.vNum; i ++) {
+				console.log(i);
+				this.clearDfsRes();
+				this.clearVisited();
+				this.dfs(this.nodeSet[i]);
+				this.dfsSet[i] = this.dfsRes;
+			}
+		}
+
+		function genBfsSet() {
+			for (var i = 0; i < this.vNum; i ++) {
+				this.clearBfsRes();
+				this.bfs(this.nodeSet[i]);
+				this.bfsSet[i] = this.bfsRes;
+			}
+		}
+
+		// graph.dfs(0);
+		// graph.bfs(0);
+
+		graph.genDfsSet();
+		graph.genBfsSet();
+	</script>
+</body>
+</html>

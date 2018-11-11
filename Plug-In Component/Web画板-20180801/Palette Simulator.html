@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Palette Simulator-20180801-Alexander00Win99</title>
+	<link rel="stylesheet" href="css/PaletteSimulator.css">
+</head>
+<body>
+	<div class="wrapper">
+		<canvas class="cavs" width="600" height="360"></canvas>
+		<!-- css style priority to label style -->
+		<ul class="btn-list">
+			<li><input type="color" id="pickColor" value="选色"></li>
+			<li class="line"><input type="range" id="setLine" value="线条"></li>
+			<li><input type="button" id="cleanBoard" value="清屏"></li>
+			<li><input type="button" id="eraser" value="橡皮"></li>
+			<li><input type="button" id="undo" value="撤销"></li>
+		</ul>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/PaletteSimulator.js"></script>
+	<script>
+
+		// var cavsDom = document.getElementsByClassName("cavs")[0];
+		// var ctx = cavsDom.getContext("2d");
+		// console.log(cavsDom);
+		// console.log("cavsDom, ctx");
+		// console.log(ctx);
+
+		// ctx.beginPath();
+		// ctx.moveTo(100, 100);
+		// ctx.lineTo(200, 100);
+		// ctx.lineTo(200, 200);
+		// ctx.lineTo(100, 100);
+		// ctx.strokeStyle = "#001122";
+		// ctx.lineWidth = 8;
+		// // ctx.stroke(); /* stroke在属性设置前调用无效 */
+		// ctx.lineCap = "round"; /* butt默认没有任何样式|round圆头|square方头 */
+		// ctx.lineJoin = "round"; /* miter默认尖角|round圆角|bevel斜角 */
+		// ctx.fillStyle = "#F40";
+		// ctx.stroke();
+		// ctx.fill();
+		// var imageSrc = ctx.getImageData(96, 96, 108, 108);
+		//  imageSrc有三个属性：
+		// 1) data图片像素数据
+		// 2) width图片宽度
+		// 3) height图片高度
+		// imageSrc.data是一个Uint8ClampedArray数组，Uint8ClampedArray是TypedArray中的一种：
+		// Int8Array; Uint8Array; Uint8ClampedArray; Int16Array; Uint16Array; Int32Array; Uint32Array; Float32Array; Float64Array; 
+		// console.log(imageSrc);
+		// ctx.closePath();
+
+		// ctx.beginPath();
+		// ctx.moveTo(100, 250);
+		// ctx.lineTo(200, 250);
+		// ctx.lineTo(200, 350);
+		// ctx.lineTo(100, 250);
+		// ctx.strokeStyle = "#112233";
+		// ctx.lineWidth = 8;
+		// ctx.lineCap = "square";
+		// ctx.lineJoin = "bevel";
+		// ctx.fillStyle = "#FE0";
+		// ctx.stroke();
+		// ctx.fill();
+		// var imageDst = ctx.putImageData(imageSrc, 296, 246);
+		// // var imageDst = ctx.putImageData(imageSrc, 296, 246, 108, 108, 600, 360);
+		// console.log(imageDst);
+		// ctx.closePath();
+
+		// // ctx.clearRect(45, 145, 60, 60);
+
+	</script>
+</body>
+</html>

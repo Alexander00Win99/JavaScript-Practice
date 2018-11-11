@@ -1,0 +1,56 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.wrapper {
+	position: relative;
+	width: 400px;
+	height: 600px;
+	margin: 160px auto;
+	border: 1px solid orange;
+}
+
+.wrapper .go {
+	position: absolute;
+	top: 0;
+	z-index: 99;
+	width: 100%;
+	text-align: center;
+	border: 1px solid orange;
+}
+
+.wrapper .go a {
+	display: block;
+	width: 400px;
+	height: 100px;
+	color: orange;
+	font-size: 60px;
+	font-weight: 500;
+	line-height: 100px;
+	text-decoration: none;
+	border-bottom: 3px dashed aqua;
+}
+
+.wrapper .main {
+	position: relative;
+	top: -150px;
+	width: 400px;
+	height: 600px;
+	overflow: hidden;
+	border: 1px solid orange;
+}
+
+.wrapper .main .row {
+	width: 400px;
+	height: 150px;
+}
+
+.wrapper .main .row div {
+	float: left;
+	width: 98px;
+	height: 148px;
+	border: 1px solid grey;
+	cursor: pointer;
+	background-color: #fff;
+}

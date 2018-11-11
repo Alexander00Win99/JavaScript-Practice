@@ -1,0 +1,89 @@
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+body {
+	/* background: red url(../img/minions00.jpg) cover center no-repeat; */
+	background-color: transparent;
+	background-color: grey; /* color_name|hex_number:#fff|rgb_number:rgb(255,255,255) */
+	background-image: url(../img/minions00.jpg);
+	background-size: 50%;
+	background-size: 100px;
+	background-size: contain;
+	background-size: cover;
+	background-position: center; / *left|right|top|bottom */
+	background-repeat: no-repeat; /* repeat-x|repeat-y|space */
+	background-attachment: scroll;
+	background-attachment: fixed;
+	background-clip: content-box; /* border-box|padding-box */
+	background-origin: content-box; /* border-box|padding-box */
+}
+
+.wrapper {
+	width: 600px;
+	height: 360px;
+	border: 1px solid black;
+	border: none;
+}
+
+.wrapper .cavs {
+	/*width: 600px;
+	height: 360px;*/ /* Canvas的宽度和高度只能通过行间样式设置；不能使用css样式设置 */
+	border: 2px solid royalblue;
+	border-radius: 20px;
+	box-shadow: 10px 10px 5px #888;
+}
+
+.wrapper ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-top: 10px;
+	width: 100%;
+	border: 1px solid black;
+	text-align: center;
+	border-radius: 20px;
+}
+
+.wrapper ul li {
+	/*display: inline-block;*/ /* 子级元素li设置inline-block <==> 父级元素ul设置flex */
+	margin-left: 20px;
+	border: 1px solid black;
+	border: none;
+	height: 40px;
+	line-height: 40px;
+}
+
+.wrapper ul li.line {
+	/*left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;*/ /* 这里如此设置会导致左右magin挤占其他li */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.wrapper ul li input {
+	padding: 6px 12px;
+	background-color: pink;
+	color: red;
+	border-radius: 20px;
+	font-size: 18px;
+	font-weight: 600;
+	cursor: pointer;
+	transition-duration: 0.36s; 
+}
+
+.wrapper ul li input:hover {
+	border: 1px solid rebeccapurple;
+	box-shadow: 6px 6px 12px 0 rgba(0, 0, 0, 0.99); /* box-shadow:[inset|outset] x-offset y-offset blur-radius spread-radiuscolor shadow-color */
+}
+
+#pickColor {
+	color: #FF0000;
+	background-color: #00FFFF;
+}

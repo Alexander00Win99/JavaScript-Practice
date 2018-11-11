@@ -1,0 +1,70 @@
+* {
+	margin: 0;
+}
+
+body {
+	overflow: hidden;
+	background-color: #123;
+}
+
+/*.wrapper {
+	width: 1000px;
+	height: 1000px;
+	margin: 30px auto;
+	border: 1px solid #000;
+	text-align: center;
+}*/
+
+.wrapper {
+	width: 100%;
+	text-align: center;
+}
+
+.wrapper .column,
+         .colon {
+	display: inline-block;
+	vertical-align: top;
+	font-size: 80px;
+	font-weight: 450;
+	line-height: 80px;
+	color: rgba(234, 234, 234, .81);
+}
+
+.wrapper .column {
+	transition: transform 300 ease-in-out;
+	padding: 0 5px;
+}
+
+.wrapper .colon {
+	transform: translateY(calc(50vh - 45px));
+}
+
+.wrapper .column div {
+	transition: opacity 300ms text-shadow 300ms;
+	opacity: .5;
+}
+
+.wrapper .column .visible {
+	opacity: 1;
+	text-shadow: 1px 1px 30px #369;
+}
+
+.wrapper .column .near {
+	opacity: .7;
+}
+
+.wrapper .column .close {
+	opacity: .5;
+}
+
+.wrapper .column .far {
+	opacity: .35;
+}
+
+.wrapper .column .distant {
+	opacity: .25;
+}
+
+.wrapper .column .remote {
+	opacity: .15;
+}
